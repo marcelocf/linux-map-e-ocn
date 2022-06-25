@@ -1,10 +1,18 @@
 #!/bin/bash
 # This is thge main entry point for the script
 
-source env.sh
+RUNDIR=$(realpath `dirname $0`)
+
+source ${RUNDIR}/env.sh
 source lib/sysctl.sh
 source lib/networkd.sh
 source lib/iptables.sh
+
+
+
+function env_ports() {
+  cat ${RUNDIR}/env.ports | sed 's/\ /\n/g' | grep '-'
+}
 
 case "$1" in
   sysctl)
@@ -24,6 +32,12 @@ case "$1" in
     ;;
   iptables)
     iptables_contents
+    ;;
+  iptables-ports)
+    iptables_ports_contents
+    ;;
+  iptables-ports-table)
+    iptables_ports_table_contents
     ;;
   *)
     echo please read the README.md file carefully!

@@ -12,11 +12,11 @@ function to_markdown() {
  done
 }
 
-speedtest --server 14623 --csv-header | to_markdown
+speedtest --csv-header | to_markdown
 echo "| --- | --- | --- | --- |"
-for i in `seq 1 5`
+for i in `seq 1 15`
 do
         speedtest --server 14623 --csv | to_markdown
-        sleep 10
+        sleep 5
 done
 

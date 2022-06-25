@@ -189,22 +189,26 @@ Those are the speedtest comparing the standard direct IPv4 connection to the
 ones using MAP-E during the peak hour (around 18:30) in a Saturday in a residential
 area in the Tokyo suburbs (doesn't get worst thatn that for me).
 
-Those are the worst and best results for each in 5 attempts spaced by 10s each,
-all using the same server for consistency.
+
+I wanted to select the same server on every run for consistency, but it kept
+failing to find the server by ID randomly. So I set it up to run a total of 15
+times with 5 secs delay between runs and selected the ones that were successful.
+
+All speeds in bits.
+
+### Direct connection via IPv4 (failed to find the server 2 times)
 
 
-Direct connection via IPv4:
 
-```
-```
-
-MAP-E enabled with `./generate.sh iptables` (15 mappings):
-```
-```
+### MAP-E enabled with `./generate.sh iptables` (15 mappings):
 
 
-MAP-E enabled with `./generate.sh iptables-from-table` (63 mappings):
-```
-```
+### MAP-E enabled with `./generate.sh iptables-from-table` (63 mappings):
 
 
+## Conclusion
+
+(based on what I have seen so far)
+The main difference between the MAP-E and direct was consistency. It was indeed
+more reliable and it worked all the time. Enabling more ports didn't do much, but
+it might be a good idea for me since I have tons of devices.

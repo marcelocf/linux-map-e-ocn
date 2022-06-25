@@ -20,6 +20,9 @@ Also note that according to [this article)[https://arxiv.org/pdf/1612.00309.pdf]
 So it could be that the implementation is not exactly standard right now. I 
 highly doubt that so I am moving forward.
 
+Hopefully, once this is approved by IEFT then it might make its way into systemd-networkd
+nativelly.
+
 ## Intro
 
 I finally decided it was time to stop using the crappy routers you can buy with
@@ -107,3 +110,23 @@ Ideally I would setup something like ansible or puppet with gitops, but since th
 seems to be a problem people are constantly facing I figured it would be better
 to do something a bit simpler so we can all learn together.
 
+## Install
+
+> NOTE: this is how it should work after I finish working on this.
+
+This is the TL;DR for configuring your network with the scripts on this page.
+
+1. checkout this repository to the machine you want to configure as router.
+1. rename `env.sh.template` do `env.sh` and fill in the information found 
+   previously on this page.
+1. make a new file called `env.ports` with the contents of the ports textarea.
+1. `./setup.sh sysctl` to generate the sysctl configuration.
+1. `./setup.sh systemd` to generate the systemd-networkd configuration.
+1. `./setup.sh tunnel-forward` to generate the tunnel forwarding scripts
+1. `./setup.sh tunnel-ports` to generate the tunnel ports forwarding script.
+
+All the information being output should then be copied to your configuration files
+in /etc/. We do not overwrite files there because we don't wait to break people's
+systems by doing something we shouldn't at this stage.
+
+After this reboot and it `should` work? Idk.. I am still developing this.

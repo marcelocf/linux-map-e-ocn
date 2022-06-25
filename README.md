@@ -1,10 +1,24 @@
 # Using MAP-E (OCN) on a Linux router
 
+**STATUS: WORK IN PROGRESS**
+
 This repository contains docs and scripts to aid configuring the MAP-E in Linux.
 
 > **WARNING:** This is for MAP-E provided by OCN only! You can check if that is
 > your case by going to [this website](https://v6test.ocn.ne.jp/) with IPv6 
 > enabled in the connection you want to setup.
+
+Also, disclaimer: I am a software engineer, NOT a network or infra engineer.
+There is a huge chance information I share here is wrong or I didn't interpret
+something in the right way. For that I highly recommend you look up other sources.
+
+I tried my best to link my own sources and tried to keep them as reputable as
+possible.
+
+Also note that according to [this article)[https://arxiv.org/pdf/1612.00309.pdf],
+`both MAP-E or MAP-T are still IETF’s drafts and still aren’t implemented in large scale`.
+So it could be that the implementation is not exactly standard right now. I 
+highly doubt that so I am moving forward.
 
 ## Intro
 
@@ -21,6 +35,7 @@ well):
 * [IPv6 Basics for Beginners](https://www.youtube.com/watch?v=z7Al3P8ShM8).
 * Juniper Network's [doc on MAP-E](https://www.juniper.net/documentation/en_US/junos/topics/topic-map/map-e-configuring.html).
 * Fortigate's [doc on setting up a customer edge](https://docs.fortinet.com/document/fortigate/6.4.0/new-features/322815/map-e-support-6-4-1)
+* [MAP-E IETF's draft](https://datatracker.ietf.org/doc/html/rfc7597)
 
 With that out of the way you can start digging into the Japanese websites:
 
@@ -79,5 +94,16 @@ port mapping configuration. So I separated configuration of both.
 
 ## Setup
 
-With this info in our hands we can continue!
+With this info in our hands we can continue! This is heavily based on the information
+on the Japanese websites linked here, but with a fundamental difference.
+
+Instead of making a script that runs directly changing the firewalls, I am building
+a script to build configuration and firewall scripts we will actually run.
+
+This is to make things more readable, reusable and to make sure you can double
+check what the script is doing before it actually runs.
+
+Ideally I would setup something like ansible or puppet with gitops, but since this
+seems to be a problem people are constantly facing I figured it would be better
+to do something a bit simpler so we can all learn together.
 

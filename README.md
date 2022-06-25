@@ -198,6 +198,8 @@ Also note my connection was through my of-the-shelve router doing NAT between
 my desktop and my router. I'll update these results later once I am connecting
 directly to the Linux router without a NAT in between.
 
+> **EDIT:** I ran the test a couple of times without the NAT, no relevant change.
+
 ### Direct connection via IPv4 (failed to find the server 2 times)
 
 | Ping | Upload Mbps | Download Mbps |
@@ -229,12 +231,10 @@ directly to the Linux router without a NAT in between.
 | 5    | 496.80      | 464.84        |
 | 5    | 541.80      | 439.52        |
 
-
 ## Conclusion
 
 Both speed and consistency were a lot better in MAP-E mode, although CPU consumption
 (not shared here) in the router as a bit higher. 
-
 
 Enabling more ports didn't do much, with slightly better speeds only. But that
 can also be attributed to me running the larger tests first, or even to pure

@@ -4,7 +4,6 @@
 RUNDIR=$(realpath `dirname $0`)
 
 source ${RUNDIR}/env.sh
-source lib/sysctl.sh
 source lib/networkd.sh
 source lib/iptables.sh
 
@@ -15,9 +14,6 @@ function env_ports() {
 }
 
 case "$1" in
-  sysctl)
-    sysctl_contents
-    ;;
   networkd-wan)
     networkd_wan_contents
     ;;

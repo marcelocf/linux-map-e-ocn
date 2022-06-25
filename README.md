@@ -1,7 +1,5 @@
 # Using MAP-E (OCN) on a Linux router
 
-**STATUS: WORK IN PROGRESS - THIS DOESN'T WORK FOR ME YET**
-
 This repository contains docs and scripts to aid configuring the MAP-E in Linux.
 
 > **WARNING:** This is for MAP-E provided by OCN only! You can check if that is
@@ -127,16 +125,17 @@ Anyway, let's move on.
 
 ### sysctl
 
-First step is to enable forwarding on sysctl with `net.ipv4.ip_forward=1`. 
+We need sysctl to be enable `ip_forward` for our tunnel interface in order to
+automagically share our connection. However, since we are using `networkd` this
+is taken care for us so no need to mess with sysctl.conf files here.
 
 ### systemd-networkd
 
 Now we need to generate the systemd-networkd configuration files. There are 3, actually.
 
-
 * LAN: configure your LAN as you wish.
-* WAN: disable IPv4, and enable IPv6 via DHCP (easier way). You can also setup
-  your connection with fixed IP and I do recommend you set your own IPv6 DNS server.
+* WAN: Enable DHCP (easier way) and RA, but then add the CE address as an aditional
+  address. Also it is good to use other DNS servers than the one from the ISP:
   * Cloud Flare servers:
     * 2606:4700:4700::1111 
     * 2606:4700:4700::1001
@@ -145,14 +144,13 @@ Now we need to generate the systemd-networkd configuration files. There are 3, a
     * 2001:4860:4860::8844
 * Tunnel: now you need to add the tunnel interface and configuration.
 
-
 For the tunnel, it is important to link it to your WAN configuration and you
 need to make it your main route. Also, make sure you are terminating in the BR.
 
 ### iptables
 
-Lastly you need to forward all your IPv4 packets to that tunnel, and voila!
-
+Lastly you need to forward all your IPv4 packets to that tunnel, remapping to
+the ports that are available to you and it should work.
 
 ## Helper Script
 
@@ -163,7 +161,6 @@ This is the TL;DR for configuring your network with the scripts on this page.
 You can use the `generat.sh` script to generate basic configuration. However, 
 in order to use it you must know how to configure:
 
-1. sysctl
 1. systemd-networkd
 1. iptables (specially how to load iptables rules when booting)
 
@@ -184,3 +181,30 @@ before you start playing with the configuration:
 * traceroute
 * tcpdump
 * mtr
+
+
+## Results
+
+Those are the speedtest comparing the standard direct IPv4 connection to the 
+ones using MAP-E during the peak hour (around 18:30) in a Saturday in a residential
+area in the Tokyo suburbs (doesn't get worst thatn that for me).
+
+Those are the worst and best results for each in 5 attempts spaced by 10s each,
+all using the same server for consistency.
+
+
+Direct connection via IPv4:
+
+```
+```
+
+MAP-E enabled with `./generate.sh iptables` (15 mappings):
+```
+```
+
+
+MAP-E enabled with `./generate.sh iptables-from-table` (63 mappings):
+```
+```
+
+

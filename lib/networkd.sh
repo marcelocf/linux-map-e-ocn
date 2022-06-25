@@ -9,24 +9,29 @@ function networkd_wan_contents(){
 [Match]
 Name=${WAN_IFACE}
 
-[Networks]
-Address=${CE}
+[Network]
+# we need to actually connect to build the tunnel....
+IPv6AcceptRA=yes
+
+# We can disable IPv4 here, but enabling it allow us to do some clever routing.
+# for example, we can use it to expose our LAN services with a dyndns if we want
+# since the other IPv4 address they give us is shared
+DHCP=yes
+
 DNS=2606:4700:4700::1111 
 DNS=2606:4700:4700::1001
 DNS=2001:4860:4860::8888
 DNS=2001:4860:4860::8844
 
-#DHCP=ipv6
-#DHCPServer=no
-#IPForward=ipv4
-
 Tunnel=${TUNNEL_NAME}
 
-# might be needed to properly work
-# [Link]
-# RequiredForOnline=yes
-# Multicast=yes
-# AllMulticast=yes
+[Address]
+# but we must also listen to the IP for our CE
+Address=${CE}
+# this is just in case you are given the same IP as CE by the ISP (not sure
+# if it actually happens; it didn't for me)
+DuplicateAddressDetection=no
+
 
 EOF
 }
@@ -64,7 +69,13 @@ function networkd_tunnel_contents() {
 Name=$TUNNEL_NAME
 
 [Network]
+# this will automatically setup sysctl for routing here
 IPForward=ipv4
+BindCarrier=${WAN_IFACE}
+DefaultRouteOnDevice=yes
+DHCP=no
+IPv6AcceptRA=no
+LinkLocalAddressing=no
 
 [Route]
 Destination=0.0.0.0/0

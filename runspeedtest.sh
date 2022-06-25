@@ -16,7 +16,7 @@ speedtest --csv-header | to_markdown
 echo "| --- | --- | --- | --- |"
 for i in `seq 1 15`
 do
-        speedtest --server 14623 --csv | to_markdown
+        speedtest --csv | to_markdown
         sleep 5
 done
 

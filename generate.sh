@@ -33,11 +33,8 @@ case "$1" in
   iptables)
     iptables_contents
     ;;
-  iptables-ports)
-    iptables_ports_contents
-    ;;
-  iptables-ports-table)
-    iptables_ports_table_contents
+  iptables-from-table)
+    iptables_contents from-table
     ;;
   *)
     echo please read the README.md file carefully!

@@ -6,7 +6,7 @@
 
 
 function to_markdown() {
-  cut -d, -f 3,6,7,8 | sed 's/,/ | /g' | while read LINE
+  cut -d, -f 1,6,7,8 | sed 's/,/ | /g' | while read LINE
  do
    echo "| ${LINE} |"
  done

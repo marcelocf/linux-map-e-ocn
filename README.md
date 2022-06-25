@@ -186,29 +186,56 @@ before you start playing with the configuration:
 ## Results
 
 Those are the speedtest comparing the standard direct IPv4 connection to the 
-ones using MAP-E during the peak hour (around 18:30) in a Saturday in a residential
-area in the Tokyo suburbs (doesn't get worst thatn that for me).
+ones using MAP-E around 19:50 in a Saturday in a residential area in the Tokyo
+suburbs (doesn't get worst thatn that for me).
 
+I wanted to use the command line to run it multiple times but I was getting
+very inconclusive results. The more I ran the command, even with the same server,
+the slower it got. In the browser I got more consistency so I copied the results
+here manually (5 per connection type), all against ID3.net Tokyo server.
 
-I wanted to select the same server on every run for consistency, but it kept
-failing to find the server by ID randomly. So I set it up to run a total of 15
-times with 5 secs delay between runs and selected the ones that were successful.
-
-All speeds in bits.
+Also note my connection was through my of-the-shelve router doing NAT between
+my desktop and my router. I'll update these results later once I am connecting
+directly to the Linux router without a NAT in between.
 
 ### Direct connection via IPv4 (failed to find the server 2 times)
 
+| Ping | Upload Mbps | Download Mbps |
+| ---- | ----------- | ------------- |
+| 7    | 289.09      | 216.27        |
+| 6    | 233.71      | 338.02        |
+| 6    | 296.23      | 356.15        |
+| 6    | 269.82      | 375.47        |
+| 6    | 270.82      | 382.45        |
 
 
 ### MAP-E enabled with `./generate.sh iptables` (15 mappings):
 
+| Ping | Upload Mbps | Download Mbps |
+| ---- | ----------- | ------------- |
+| 5    | 486.95      | 439.20        |
+| 5    | 479.04      | 471.66        |
+| 6    | 438.71      | 443.19        |
+| 5    | 466.19      | 454.57        |
+| 5    | 444.66      | 463.57        |
 
 ### MAP-E enabled with `./generate.sh iptables-from-table` (63 mappings):
+
+| Ping | Upload Mbps | Download Mbps |
+| ---- | ----------- | ------------- |
+| 6    | 460.18      | 450.05        |
+| 6    | 482.35      | 454.17        |
+| 6    | 465.48      | 463.75        |
+| 5    | 496.80      | 464.84        |
+| 5    | 541.80      | 439.52        |
 
 
 ## Conclusion
 
-(based on what I have seen so far)
-The main difference between the MAP-E and direct was consistency. It was indeed
-more reliable and it worked all the time. Enabling more ports didn't do much, but
-it might be a good idea for me since I have tons of devices.
+Both speed and consistency were a lot better in MAP-E mode, although CPU consumption
+(not shared here) in the router as a bit higher. 
+
+
+Enabling more ports didn't do much, with slightly better speeds only. But that
+can also be attributed to me running the larger tests first, or even to pure
+luck.

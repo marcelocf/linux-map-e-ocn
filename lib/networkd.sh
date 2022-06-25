@@ -26,8 +26,8 @@ DNS=2001:4860:4860::8844
 Tunnel=${TUNNEL_NAME}
 
 [Address]
-# but we must also listen to the IP for our CE
-Address=${CE}
+# but we must also listen to the IP for our CE - the /64 is important here
+Address=${CE}/64
 # this is just in case you are given the same IP as CE by the ISP (not sure
 # if it actually happens; it didn't for me)
 DuplicateAddressDetection=no
@@ -42,7 +42,7 @@ function networkd_lan_contents() {
 [Match]
 Name=${LAN_IFACE}
 
-[Networks]
+[Network]
 Addreess=$LAN_ADDRESS
 EOF
 }

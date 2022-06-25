@@ -1,31 +1,29 @@
 #!/bin/bash
 # This is thge main entry point for the script
 
+source env.sh
 source lib/sysctl.sh
+source lib/networkd.sh
+source lib/iptables.sh
 
 case "$1" in
   sysctl)
-    source env.sh
     sysctl_contents
     ;;
-  systemd-wan)
-    source env.sh
-    echo systemd
+  networkd-wan)
+    networkd_wan_contents
     ;;
-  systemd-lan)
-    source env.sh
-    echo systemd
+  networkd-lan)
+    networkd_lan_contents
     ;;
-  systemd-tunnel)
-    source env.sh
-    echo systemd
+  networkd-tunnel-dev)
+    networkd_tunnel_dev_contents
+    ;;
+  networkd-tunnel)
+    networkd_tunnel_contents
     ;;
   iptables)
-    source env.sh
-    echo tunnel-forward
-    ;;
-  iptables-ports)
-    echo tunnel-ports
+    iptables_contents
     ;;
   *)
     echo please read the README.md file carefully!

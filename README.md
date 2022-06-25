@@ -176,3 +176,11 @@ All the information being output should then be copied to your configuration fil
 in /etc/. We do not overwrite files there because we don't wait to break people's
 systems by doing something we shouldn't at this stage.
 
+## Useful tools for troubleshooting
+
+You should know all that already, but it is nice to have those tools installed
+before you start playing with the configuration:
+
+* traceroute
+* tcpdump
+* mtr

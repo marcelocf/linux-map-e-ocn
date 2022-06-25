@@ -16,7 +16,18 @@ DNS=2606:4700:4700::1001
 DNS=2001:4860:4860::8888
 DNS=2001:4860:4860::8844
 
+#DHCP=ipv6
+#DHCPServer=no
+#IPForward=ipv4
+
 Tunnel=${TUNNEL_NAME}
+
+# might be needed to properly work
+# [Link]
+# RequiredForOnline=yes
+# Multicast=yes
+# AllMulticast=yes
+
 EOF
 }
 

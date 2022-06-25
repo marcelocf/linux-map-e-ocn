@@ -8,15 +8,23 @@ case "$1" in
     source env.sh
     sysctl_contents
     ;;
-  systemd)
+  systemd-wan)
     source env.sh
     echo systemd
     ;;
-  tunnel-forward)
+  systemd-lan)
+    source env.sh
+    echo systemd
+    ;;
+  systemd-tunnel)
+    source env.sh
+    echo systemd
+    ;;
+  iptables)
     source env.sh
     echo tunnel-forward
     ;;
-  tunnel-ports)
+  iptables-ports)
     echo tunnel-ports
     ;;
   *)

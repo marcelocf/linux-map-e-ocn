@@ -63,6 +63,16 @@ simple I will be:
 I am using Arch Linux, but it should work on any modern debian distro based on
 systemd such as Ubuntu and its variants.
 
+## Out of the box support
+
+There has been some activity in the [Linux Kernel](https://lore.kernel.org/lkml/20210726143729.GN9904@breakpoint.cc/T/)
+and [OpenWrt](https://openwrt.org/packages/pkgdata/map) (
+[source code](https://github.com/openwrt/openwrt/tree/openwrt-21.02/package/network/ipv6/map))
+to make MAP-E something that is supported out of the box.
+
+So I am hopeful we can someday configure like it is just another connection in the
+future, and then just tunnel everything there.
+
 ## What we want to do
 
 First step is, of course, to get a valid IPv6 connection. Luckily you can just
@@ -106,27 +116,63 @@ a script to build configuration and firewall scripts we will actually run.
 This is to make things more readable, reusable and to make sure you can double
 check what the script is doing before it actually runs.
 
-Ideally I would setup something like ansible or puppet with gitops, but since this
-seems to be a problem people are constantly facing I figured it would be better
-to do something a bit simpler so we can all learn together.
+I am not doing something that directly change your system for a couple of reasons:
 
-## Install
+1. I don't want to break stuff.
+1. I currently don't have time to maintain something like that.
+1. I hope that when MAP-E is approved as a standard, then it will work out of the box.
+
+
+Anyway, let's move on.
+
+### sysctl
+
+First step is to enable forwarding on sysctl with `net.ipv4.ip_forward=1`. 
+
+### systemd-networkd
+
+Now we need to generate the systemd-networkd configuration files. There are 3, actually.
+
+
+* LAN: configure your LAN as you wish.
+* WAN: disable IPv4, and enable IPv6 via DHCP (easier way). You can also setup
+  your connection with fixed IP and I do recommend you set your own IPv6 DNS server.
+  * Cloud Flare servers:
+    * 2606:4700:4700::1111 
+    * 2606:4700:4700::1001
+  * Google servers;
+    * 2001:4860:4860::8888
+    * 2001:4860:4860::8844
+* Tunnel: now you need to add the tunnel interface and configuration.
+
+
+For the tunnel, it is important to link it to your WAN configuration and you
+need to make it your main route. Also, make sure you are terminating in the BR.
+
+### iptables
+
+Lastly you need to forward all your IPv4 packets to that tunnel, and voila!
+
+
+## Helper Script
 
 > NOTE: this is how it should work after I finish working on this.
 
 This is the TL;DR for configuring your network with the scripts on this page.
 
+You can use the `generat.sh` script to generate basic configuration. However, 
+in order to use it you must know how to configure:
+
+1. sysctl
+1. systemd-networkd
+1. iptables (specially how to load iptables rules when booting)
+
 1. checkout this repository to the machine you want to configure as router.
 1. rename `env.sh.template` do `env.sh` and fill in the information found 
    previously on this page.
-1. make a new file called `env.ports` with the contents of the ports textarea.
-1. `./setup.sh sysctl` to generate the sysctl configuration.
-1. `./setup.sh systemd` to generate the systemd-networkd configuration.
-1. `./setup.sh tunnel-forward` to generate the tunnel forwarding scripts
-1. `./setup.sh tunnel-ports` to generate the tunnel ports forwarding script.
+1. open the `./generate.sh` file to see available options.
 
 All the information being output should then be copied to your configuration files
 in /etc/. We do not overwrite files there because we don't wait to break people's
 systems by doing something we shouldn't at this stage.
 
-After this reboot and it `should` work? Idk.. I am still developing this.

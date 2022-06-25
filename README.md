@@ -1,6 +1,6 @@
 # Using MAP-E (OCN) on a Linux router
 
-**STATUS: WORK IN PROGRESS**
+**STATUS: WORK IN PROGRESS - THIS DOESN'T WORK FOR ME YET**
 
 This repository contains docs and scripts to aid configuring the MAP-E in Linux.
 

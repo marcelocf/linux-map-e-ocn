@@ -1,5 +1,8 @@
 # Using MAP-E (OCN) on a Linux router
 
+> **DO THIS AT YOUR OWN RISK! I AM NOT RESPONSIBLE FOR POTTENTIAL DAMAGES DUE TO FOLLOGIN THESE INSTRUCTIONS.**
+> **I'M JUST SHARING THIS SINCE IT WAS A GREAT LEARNING EXPERIENCE FOR ME.**
+
 This repository contains docs and scripts to aid configuring the MAP-E in Linux.
 
 > **WARNING:** This is for MAP-E provided by OCN only! You can check if that is
